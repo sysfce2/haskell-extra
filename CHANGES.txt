@@ -1,5 +1,6 @@
 Changelog for Extra (* = breaking change)
 
+    #118. future proof for GHC 9.16 gaining nubOrd and nubOrdBy
     Test with GHC 9.12
 1.8, released 2024-10-19
     #109, add guarded to lift predicates into Alternatives
