@@ -80,18 +80,22 @@ sortOn f = fromList . List.sortOn f . toList
 union :: Eq a => NonEmpty a -> NonEmpty a -> NonEmpty a
 union = unionBy (==)
 
+#if __GLASGOW_HASKELL__ <= 914
 -- | @nubOrd@ for 'NonEmpty'. Behaves the same as 'Data.List.Extra.nubOrd'.
 --
 -- > Data.List.NonEmpty.Extra.nubOrd (1 :| [2, 3, 3, 4, 1, 2]) == 1 :| [2, 3, 4]
 -- > \xs -> Data.List.NonEmpty.Extra.nubOrd xs == Data.List.NonEmpty.Extra.nub xs
 nubOrd :: Ord a => NonEmpty a -> NonEmpty a
 nubOrd = nubOrdBy compare
+#endif
 
+#if __GLASGOW_HASKELL__ <= 914
 -- | @nubOrdBy@ for 'NonEmpty'. Behaves the same as 'Data.List.Extra.nubOrdBy'.
 --
 -- > Data.List.NonEmpty.Extra.nubOrdBy (compare `on` Data.List.length) ("a" :| ["test","of","this"]) == "a" :| ["test","of"]
 nubOrdBy :: (a -> a -> Ordering) -> NonEmpty a -> NonEmpty a
 nubOrdBy cmp = fromList . List.nubOrdBy cmp . toList
+#endif
 
 -- | @nubOrdOn@ for 'NonEmpty'. Behaves the same as 'Data.List.Extra.nubOrdOn'.
 --

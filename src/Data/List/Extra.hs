@@ -816,6 +816,7 @@ nubSortBy cmp = f . sortBy cmp
           f (x:xs) = x : f xs
           f [] = []
 
+#if __GLASGOW_HASKELL__ <= 914
 -- | /O(n log n)/. The 'nubOrd' function removes duplicate elements from a list.
 -- In particular, it keeps only the first occurrence of each element.
 -- Unlike the standard 'nub' operator, this version requires an 'Ord' instance
@@ -826,6 +827,7 @@ nubSortBy cmp = f . sortBy cmp
 -- > \xs -> nubOrd xs == nub xs
 nubOrd :: Ord a => [a] -> [a]
 nubOrd = nubOrdBy compare
+#endif
 
 -- | A version of 'nubOrd' which operates on a portion of the value.
 --
@@ -833,6 +835,7 @@ nubOrd = nubOrdBy compare
 nubOrdOn :: Ord b => (a -> b) -> [a] -> [a]
 nubOrdOn f = map snd . nubOrdBy (compare `on` fst) . map (f &&& id)
 
+#if __GLASGOW_HASKELL__ <= 914
 -- | A version of 'nubOrd' with a custom predicate.
 --
 -- > nubOrdBy (compare `on` length) ["a","test","of","this"] == ["a","test","of"]
@@ -841,6 +844,7 @@ nubOrdBy cmp xs = f E xs
     where f seen [] = []
           f seen (x:xs) | memberRB cmp x seen = f seen xs
                         | otherwise = x : f (insertRB cmp x seen) xs
+#endif
 
 ---------------------------------------------------------------------
 -- OKASAKI RED BLACK TREE
